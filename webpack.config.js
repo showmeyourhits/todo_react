@@ -1,3 +1,4 @@
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     entry: "./src/index.js",
     output: {
@@ -6,14 +7,14 @@ module.exports = {
     },
     devServer: {
         inline: true,
-        port: 8000,
-        contentBase: "./src"
+        port: 4445,
+        contentBase: "./dist"
     },
     module: {
         loaders: [
             {
                 test: /\.js$/,
-                exclude: [/node_modules/, /typings/],
+                exclude: [/node_modules/],
                 loader: "babel",
                 query: {
                     presets: ["es2015", "react"]
@@ -21,14 +22,12 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                exclude: [/node_modules/, /typings/],
-                loaders: ["style", "css", "sass"]
-            },
-            {
-                test: /\.css$/,
-                exclude: [/node_modules/, /typings/],
-                loaders: ["style", "css"]
+                exclude: [/node_modules/],
+                loader: ExtractTextPlugin.extract("style", "css!sass"),
             }
         ]
-    }
+    },
+    plugins: [
+        new ExtractTextPlugin("bundle.css"),
+    ]
 }
