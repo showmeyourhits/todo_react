@@ -1,0 +1,31 @@
+
+.todo-stats{
+	text-align: center;
+	position: relative;
+
+	&__undone,
+	&__del-done{
+		position: absolute;
+		top: 5px;
+	}
+
+	&__undone{
+		left: 10px;
+	}
+	&__del-done{
+		right: 10px;
+	}
+
+
+}
+
+.filters{
+	list-style: none;
+	margin: 0px;
+	display: inline-block;
+
+	li {
+		display: inline-block;
+		padding: 5px;
+	}
+}
