@@ -4,14 +4,15 @@ import ReactDOM from 'react-dom';
 import {isEnterKey, isFieldEmpty} from './../constants';
 
 
-export default function({handleAddTodo}){
+export default function({addTodo}){
 	const handleInput = (ev) => {
 		if (!isFieldEmpty(ev) && isEnterKey(ev)){
-			handleAddTodo(ev.target.value);
+			console.log(ev.target.value);
+			addTodo(ev.target.value);
 			ev.target.value = "";
 		}
 	};
 	return (
-		<input type="text" placeholder="Whatcha gonna do" onKeyDown={handleInput}/>
+		<input className="add-todo" type="text" placeholder="Whatcha gonna do" onKeyDown={handleInput}/>
 		);
 }

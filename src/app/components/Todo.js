@@ -3,28 +3,50 @@ import ReactDOM from 'react-dom';
 
 import {isEnterKey, isFieldEmpty} from './../constants';
 
-function Todo({id, done, title, handlers}){
-	const saveTodo = (newTitle) => {
-		handlers.handleSave(id, newTitle);
+
+class Todo extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {editing: false};
 	}
-	return (
-		<li onDoubleClick={ev => handlers.handleEdit(id)}>
-			<input type='checkbox' checked={done} onChange={ev => handlers.handleToggle(id)}/>
-			<span>{title}</span>
-			<button onClick={ev => handlers.handleRemove(id)}>X</button>
-			<input type='text' placeholder='Rename your TODO' 
-				onBlur={ev => {
-					if (!isFieldEmpty(ev)){
-						saveTodo(ev.target.value);
-					}
-				}}
-				onKeyDown={ev => {
-					if (!isFieldEmpty(ev) && isEnterKey(ev)){
-						saveTodo(ev.target.value);
-					}
-				}}/>
-		</li>
-		);
-};
+
+	render() {
+		return (
+			<li className={"todo " + (this.state.editing ? 'todo--editing ' : '') 
+				+ (this.props.done ? 'todo--completed ' : '')}
+				onDoubleClick={() => {
+					this.setState({editing: true});
+				}}>
+				
+				<div className="todo__content">
+
+					<input type='checkbox' checked={this.props.done} 
+						onChange={ev => this.props.handlers.toggleTodo(this.props.id)}/>
+					
+					<span className='todo__title' >{this.props.title}</span>
+					
+					<button 
+						className='todo__remove' 
+						onClick={ev => this.props.handlers.deleteTodo(this.props.id)}>X</button>
+				
+				</div>
+				<input type='text' placeholder='Rename your TODO'
+					className='todo__edit'
+					onBlur={ev => {
+						if (!isFieldEmpty(ev)){
+							this.props.handlers.saveTodo(this.props.id, ev.target.value);
+							this.setState({editing: false});
+						}
+					}}
+					onKeyDown={ev => {
+						if (!isFieldEmpty(ev) && isEnterKey(ev)){
+							this.props.handlers.saveTodo(this.props.id, ev.target.value);
+							this.setState({editing: false});
+						}
+					}}
+					defaultValue={this.props.title}/>
+			</li>);
+	}
+}
 
 export default Todo;

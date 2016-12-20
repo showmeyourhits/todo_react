@@ -5,7 +5,12 @@ import ReactDOM from 'react-dom';
 import {filters} from './../constants';
 
 
-function Filter({filterKey}){
+function Filter({currentFilterKey, filterKey}){
+	if (currentFilterKey === filterKey){
+		return (
+			<span>{filterKey[0] + filterKey.slice(1).toLowerCase()}</span>
+			);
+	}
 	return(
 		<a href="#" onClick={e=>{
 			e.preventDefault();
@@ -15,7 +20,7 @@ function Filter({filterKey}){
 };
 
 
-export default function({undone, handleFilter, handleDeleteDone}){
+export default function({undone, done, filterKey, deleteDone, filterList}){
 
 	const getNewFilterKey = (ev) => {
 		if (ev.target.nodeName === "A"){
@@ -29,20 +34,22 @@ export default function({undone, handleFilter, handleDeleteDone}){
 	}
 	
 	return (
-		<div>
-			<span>{undone > 0 ? `${undone} left.` : null}</span>
+		<div className={"todo-stats " + ((undone + done) === 0 ? "hide " : "")}>
+			<span className="todo-stats__undone">{undone > 0 ? `${undone} left.` : null}</span>
 			<ul onClick={ev => {
 				const newFilter = getNewFilterKey(ev);
 				if (newFilter){
-					handleFilter(filters[newFilter]);
+					filterList(newFilter);
 				}
-			}}>
-				<li><Filter filterKey={filters.ALL}/></li>
-				<li><Filter filterKey={filters.DONE}/></li>
-				<li><Filter filterKey={filters.UNDONE}/></li>
+			}}
+			className="filters">
+				<li><Filter currentFilterKey={filterKey} filterKey={filters.ALL}/></li>
+				<li><Filter currentFilterKey={filterKey} filterKey={filters.DONE}/></li>
+				<li><Filter currentFilterKey={filterKey} filterKey={filters.UNDONE}/></li>
 			</ul>
 
-			<button onClick={ev => handleDeleteDone()}>Delete em.</button>
+			<button className={"todo-stats__del-done " + (done === 0 ? 'hide ' : '')}
+			onClick={deleteDone}>Delete done</button>
 		</div>
 		);
 };

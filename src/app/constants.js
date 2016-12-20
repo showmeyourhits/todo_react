@@ -1,7 +1,7 @@
-const actionTypes = {
-	ADD: "ADD",
-	DEL: "DEL",
-	TOGGLE: "TOGGLE",
+export const actionTypes = {
+	ADD_TODO: "ADD_TODO",
+	DEL_TODO: "DEL_TODO",
+	TOGGLE_DONE: "TOGGLE_DONE",
 	FILTER: "FILTER",
 	DEL_DONE: "DEL_DONE",
 	EDIT_TODO: "EDIT",
@@ -9,17 +9,27 @@ const actionTypes = {
 	TOGGLE_ALL: "TOGGLE_ALL",
 };
 
-const filters = {
+export const filters = {
 	ALL: 'ALL',
 	DONE: 'DONE',
 	UNDONE: 'UNDONE',
 };
 
-const isEnterKey = (ev) => {
+export const isEnterKey = (ev) => {
 	return ev.keyCode && ev.keyCode === 13;
 }
-const isFieldEmpty = (ev) => {
+export const isFieldEmpty = (ev) => {
 	return !ev.target.value;
 }
 
-export {actionTypes, filters, isEnterKey, isFieldEmpty};
+export const filterTodos = (todos, filterKey) => {
+	switch(filterKey){
+		case "DONE":
+			return todos.filter(el => el.done);
+		case "UNDONE":
+			return todos.filter(el => !el.done);
+		case "ALL":
+		default:
+			return todos;
+	}
+}

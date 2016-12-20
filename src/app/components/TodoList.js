@@ -2,25 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Todo from './Todo';
 
-export default function({todos, allComplete, handleEdit, handleSave, 
-	handleRemove, handleToggle, handleToggleAll}){
+export default function({todos, editing,  allComplete, saveTodo, 
+	deleteTodo, toggleTodo, toggleAll}){
 	
 	const todoList = todos.map(el => 
 		<Todo 
-			handlers={{handleEdit, handleSave, handleRemove, handleToggle}} 
+			handlers={{saveTodo, deleteTodo, toggleTodo}} 
 			key={el.id} {...el}
 			/>) ;
 
 	return (
 		<div>
-			<label htmlFor="toggleAll">
+			<label htmlFor="toggleAll" className={todos.length ? "" : "hide"}>
 				<input 
 					type='checkbox' 
-					onChange={ev => handleToggleAll(ev.target.checked)} 
-					defaultChecked={allComplete} />
+					onChange={ev => toggleAll(ev.target.checked)} 
+					checked={allComplete} />
 				Mark all complete.
 			</label>
-			<ul>
+			<ul className='todo-list'>
 				{todoList}
 			</ul>
 		</div>

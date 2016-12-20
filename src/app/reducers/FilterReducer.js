@@ -1,10 +1,11 @@
+import {handleActions} from 'redux-actions';
+
 import {actionTypes, filters} from './../constants';
 
-export default (prevState = filters.ALL, action) => {
-	switch (action.type){
-		case actionTypes.FILTER:
-			return action.filterKey;
-		default:
-			return prevState;
-	};
-};
+const initialState = filters.ALL;
+
+export default handleActions({
+	[actionTypes.FILTER]: (state, action) => {
+		return action.payload;
+	}
+}, initialState);

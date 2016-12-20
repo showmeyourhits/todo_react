@@ -7,6 +7,7 @@ import TodoStatsContainer from './TodoStatsContainer';
 function TodoApp(){
 	return (
 		<div>
+			<h3 className='todo-app__title'>Reactive Todo</h3>
 			<AddTodoContainer />
 			<TodoListContainer />
 			<TodoStatsContainer />

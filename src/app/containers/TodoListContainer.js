@@ -1,21 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+
 import TodoList from './../components/TodoList';
-import {deleteTodo, editTodo, saveTodo, toggleTodo, toggleAll} from './../actions/Actions';
-
-
-const filterTodos = (todos, filterKey) => {
-	switch(filterKey){
-		case "DONE":
-			return todos.filter(el => el.done);
-		case "UNDONE":
-			return todos.filter(el => !el.done);
-		case "ALL":
-		default:
-			return todos;
-	}
-}
+import {deleteTodo, editTodo, saveTodo,
+		toggleTodo, toggleAll} from './../actions/Actions';
+import {filterTodos} from './../constants';
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -26,28 +17,12 @@ const mapStateToProps = (state, ownProps) => {
 		editing: state.editing
 	}
 }
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
-		handleEdit: (id) => {
-			dispatch(editTodo(id));
-		},
-		
-		handleSave: (id, newTitle) => {
-			dispatch(saveTodo(id, newTitle));
-		},
-		
-		handleRemove: (id) => {
-			dispatch(deleteTodo(id));
-		},
-		
-		handleToggle: (id) => {
-			dispatch(toggleTodo(id));
-		},
-		
-		handleToggleAll: (value) => {
-			dispatch(toggleAll(value));
-		},
-	}
-}
+const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators({
+	saveTodo,
+	deleteTodo,
+	toggleTodo,
+	toggleAll
+}, dispatch);
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

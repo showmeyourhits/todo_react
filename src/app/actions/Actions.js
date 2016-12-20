@@ -1,57 +1,21 @@
 import {actionTypes} from './../constants';
 
-export const addTodo = (title) => {
-	return {
-		type: actionTypes.ADD,
-		title,
-	}
-}
+import {createAction} from 'redux-actions';
 
-export const deleteTodo = (id) => {
-	return {
-		type: actionTypes.DEL,
-		id,
-	}
-}
 
-export const toggleTodo = (id) => {
-	return {
-		type: actionTypes.TOGGLE,
-		id,
-	}
-}
+export const addTodo = createAction(actionTypes.ADD_TODO);
 
-export const filterList = (filterKey) => {
-	return {
-		type: actionTypes.FILTER,
-		filterKey,
-	}
-}
+export const deleteTodo = createAction(actionTypes.DEL_TODO);
 
-export const deleteDone = () => {
-	return {
-		type: actionTypes.DEL_DONE,
-	}
-}
+export const toggleTodo = createAction(actionTypes.TOGGLE_DONE);
 
-export const toggleAll = (value) => {
-	return {
-		type: actionTypes.TOGGLE_ALL,
-		value,
-	}
-}
+export const filterList = createAction(actionTypes.FILTER);
 
-export const editTodo = (id) => {
-	return {
-		type: actionTypes.EDIT_TODO,
-		id,
-	}
-}
+export const deleteDone = createAction(actionTypes.DEL_DONE);
 
-export const saveTodo  = (id, newTitle) => {
-	return {
-		type: actionTypes.SAVE_TODO,
-		id,
-		newTitle,
-	}
-}
+export const toggleAll = createAction(actionTypes.TOGGLE_ALL);
+
+export const editTodo = createAction(actionTypes.EDIT_TODO);
+
+export const saveTodo  = createAction(actionTypes.SAVE_TODO,
+	(id, newTitle) => ({id, newTitle}));
