@@ -15,5 +15,11 @@ const filters = {
 	UNDONE: 'UNDONE',
 };
 
+const isEnterKey = (ev) => {
+	return ev.keyCode && ev.keyCode === 13;
+}
+const isFieldEmpty = (ev) => {
+	return !ev.target.value;
+}
 
-export {actionTypes, filters};
+export {actionTypes, filters, isEnterKey, isFieldEmpty};

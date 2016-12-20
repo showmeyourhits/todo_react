@@ -7,7 +7,7 @@ export const addTodo = (title) => {
 	}
 }
 
-export const deleleTodo = (id) => {
+export const deleteTodo = (id) => {
 	return {
 		type: actionTypes.DEL,
 		id,
@@ -24,7 +24,7 @@ export const toggleTodo = (id) => {
 export const filterList = (filterKey) => {
 	return {
 		type: actionTypes.FILTER,
-		filterKey
+		filterKey,
 	}
 }
 
@@ -44,6 +44,7 @@ export const toggleAll = (value) => {
 export const editTodo = (id) => {
 	return {
 		type: actionTypes.EDIT_TODO,
+		id,
 	}
 }
 
@@ -51,6 +52,6 @@ export const saveTodo  = (id, newTitle) => {
 	return {
 		type: actionTypes.SAVE_TODO,
 		id,
-		newTitle
+		newTitle,
 	}
 }

@@ -2,28 +2,47 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
+import {filters} from './../constants';
 
-function Filter({filter}){
+
+function Filter({filterKey}){
 	return(
 		<a href="#" onClick={e=>{
 			e.preventDefault();
-			console.log(`Filtering ${filter}`);
 
-		}}> {filter[0] + filter.slice(1).toLowerCase()} </a>
+		}}>{filterKey[0] + filterKey.slice(1).toLowerCase()}</a>
 		);
 };
 
 
-export default function({undone}){
+export default function({undone, handleFilter, handleDeleteDone}){
+
+	const getNewFilterKey = (ev) => {
+		if (ev.target.nodeName === "A"){
+			ev.preventDefault();
+			const filter = ev.target.textContent.toUpperCase(); 
+
+			return filter;
+		}else{
+			return false;
+		}
+	}
+	
 	return (
 		<div>
 			<span>{undone > 0 ? `${undone} left.` : null}</span>
-			<ul>
-				<li><Filter filter="ALL"/></li>
-				<li><Filter filter="DONE"/></li>
-				<li><Filter filter="UNDONE"/></li>
+			<ul onClick={ev => {
+				const newFilter = getNewFilterKey(ev);
+				if (newFilter){
+					handleFilter(filters[newFilter]);
+				}
+			}}>
+				<li><Filter filterKey={filters.ALL}/></li>
+				<li><Filter filterKey={filters.DONE}/></li>
+				<li><Filter filterKey={filters.UNDONE}/></li>
 			</ul>
-			<button>Delete em.</button>
+
+			<button onClick={ev => handleDeleteDone()}>Delete em.</button>
 		</div>
 		);
 };

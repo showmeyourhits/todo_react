@@ -1,4 +1,5 @@
 import uuidV4 from 'uuid/v4';
+
 import {actionTypes} from './../constants';
 
 
@@ -17,30 +18,40 @@ export default (todos = [], action) => {
 			})
 			
 		case actionTypes.TOGGLE_ALL:
-			return todos.map((todo) => {
-				//create new?
-				todo.checked = action.value;
-				return todo;
-			});
+			return todos.map((todo) => ({
+				id: todo.id,
+				done: action.value,
+				title: todo.title,
+			}));
 
 		case actionTypes.TOGGLE:
-			return todos.map((todo)=>{
+			return todos.map((todo) => {
 				if (todo.id === action.id){
-					todo.checked = !todo.checked;
+					return {
+						id: todo.id,
+						done: !todo.done,
+						title: todo.title,
+					};
+				}else{
 					return todo;
 				}
 			});
 
 		case actionTypes.DEL_DONE:
-			return todos.filter(todo => todo.checked);
-
-		case actionTypes.EDIT_TODO:
-			console.log("tryin to edit huh");
-			return todos;
+			return todos.filter(todo => !todo.done);
 
 		case actionTypes.SAVE_TODO:
-			console.log("tryin to save");
-			return todos;
+			return todos.map((todo) => {
+				if (todo.id === action.id){
+					return {
+						id: todo.id,
+						done: todo.done,
+						title: action.newTitle,
+					};
+				}else{
+					return todo;
+				}
+			});
 			
 		default:
 			return todos;
